@@ -28,6 +28,9 @@
 		92B0E528172CC3A400EF6ADA /* intro_title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0E525172CC3A400EF6ADA /* intro_title@2x.png */; };
 		92B0E529172CC3A400EF6ADA /* intro_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0E526172CC3A400EF6ADA /* intro_background@2x.png */; };
 		92B0E52B172CC4D400EF6ADA /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92B0E52A172CC4D400EF6ADA /* Accounts.framework */; };
+		92B0E534172D457800EF6ADA /* FANRoomChannelClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B0E533172D457800EF6ADA /* FANRoomChannelClient.m */; };
+		92B0E537172D5FC200EF6ADA /* FANRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B0E536172D5FC200EF6ADA /* FANRoomViewController.m */; };
+		92B0E53B172D5FFC00EF6ADA /* FANRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B0E53A172D5FFC00EF6ADA /* FANRoom.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,12 @@
 		92B0E525172CC3A400EF6ADA /* intro_title@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intro_title@2x.png"; sourceTree = "<group>"; };
 		92B0E526172CC3A400EF6ADA /* intro_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intro_background@2x.png"; sourceTree = "<group>"; };
 		92B0E52A172CC4D400EF6ADA /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		92B0E532172D457800EF6ADA /* FANRoomChannelClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FANRoomChannelClient.h; sourceTree = "<group>"; };
+		92B0E533172D457800EF6ADA /* FANRoomChannelClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FANRoomChannelClient.m; sourceTree = "<group>"; };
+		92B0E535172D5FC200EF6ADA /* FANRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FANRoomViewController.h; sourceTree = "<group>"; };
+		92B0E536172D5FC200EF6ADA /* FANRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FANRoomViewController.m; sourceTree = "<group>"; };
+		92B0E539172D5FFC00EF6ADA /* FANRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FANRoom.h; sourceTree = "<group>"; };
+		92B0E53A172D5FFC00EF6ADA /* FANRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FANRoom.m; sourceTree = "<group>"; };
 		B8F27C58091340B2A3548A54 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -120,16 +129,14 @@
 		92B0E4F1172C8DE200EF6ADA /* Fanz */ = {
 			isa = PBXGroup;
 			children = (
+				92B0E538172D5FE500EF6ADA /* Models */,
+				92B0E52C172D43C900EF6ADA /* View Controllers */,
+				92B0E532172D457800EF6ADA /* FANRoomChannelClient.h */,
+				92B0E533172D457800EF6ADA /* FANRoomChannelClient.m */,
 				92B0E4FA172C8DE200EF6ADA /* FANAppDelegate.h */,
 				92B0E4FB172C8DE200EF6ADA /* FANAppDelegate.m */,
 				92B0E503172C8DE200EF6ADA /* MainStoryboard.storyboard */,
 				92B0E4F2172C8DE200EF6ADA /* Supporting Files */,
-				92B0E516172C94C200EF6ADA /* FANFindGameViewController.h */,
-				92B0E517172C94C200EF6ADA /* FANFindGameViewController.m */,
-				92B0E519172C973E00EF6ADA /* GracenoteACR.h */,
-				92B0E51A172C9C6800EF6ADA /* CustomerCredentials.h */,
-				92B0E51B172CBA1800EF6ADA /* FANIntroViewController.h */,
-				92B0E51C172CBA1800EF6ADA /* FANIntroViewController.m */,
 			);
 			path = Fanz;
 			sourceTree = "<group>";
@@ -137,18 +144,58 @@
 		92B0E4F2172C8DE200EF6ADA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				92B0E524172CC3A400EF6ADA /* facebook_login_btn@2x.png */,
-				92B0E525172CC3A400EF6ADA /* intro_title@2x.png */,
-				92B0E526172CC3A400EF6ADA /* intro_background@2x.png */,
+				92B0E52E172D43FE00EF6ADA /* Headers */,
+				92B0E52D172D43E700EF6ADA /* Images */,
 				92B0E4F3172C8DE200EF6ADA /* Fanz-Info.plist */,
 				92B0E4F4172C8DE200EF6ADA /* InfoPlist.strings */,
 				92B0E4F7172C8DE200EF6ADA /* main.m */,
 				92B0E4F9172C8DE200EF6ADA /* Fanz-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		92B0E52C172D43C900EF6ADA /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				92B0E51B172CBA1800EF6ADA /* FANIntroViewController.h */,
+				92B0E51C172CBA1800EF6ADA /* FANIntroViewController.m */,
+				92B0E516172C94C200EF6ADA /* FANFindGameViewController.h */,
+				92B0E517172C94C200EF6ADA /* FANFindGameViewController.m */,
+				92B0E535172D5FC200EF6ADA /* FANRoomViewController.h */,
+				92B0E536172D5FC200EF6ADA /* FANRoomViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		92B0E52D172D43E700EF6ADA /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				92B0E524172CC3A400EF6ADA /* facebook_login_btn@2x.png */,
+				92B0E525172CC3A400EF6ADA /* intro_title@2x.png */,
+				92B0E526172CC3A400EF6ADA /* intro_background@2x.png */,
 				92B0E4FD172C8DE200EF6ADA /* Default.png */,
 				92B0E4FF172C8DE200EF6ADA /* Default@2x.png */,
 				92B0E501172C8DE200EF6ADA /* Default-568h@2x.png */,
 			);
-			name = "Supporting Files";
+			name = Images;
+			sourceTree = "<group>";
+		};
+		92B0E52E172D43FE00EF6ADA /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				92B0E519172C973E00EF6ADA /* GracenoteACR.h */,
+				92B0E51A172C9C6800EF6ADA /* CustomerCredentials.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		92B0E538172D5FE500EF6ADA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				92B0E539172D5FFC00EF6ADA /* FANRoom.h */,
+				92B0E53A172D5FFC00EF6ADA /* FANRoom.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,6 +290,9 @@
 				92B0E4FC172C8DE200EF6ADA /* FANAppDelegate.m in Sources */,
 				92B0E518172C94C200EF6ADA /* FANFindGameViewController.m in Sources */,
 				92B0E51D172CBA1800EF6ADA /* FANIntroViewController.m in Sources */,
+				92B0E534172D457800EF6ADA /* FANRoomChannelClient.m in Sources */,
+				92B0E537172D5FC200EF6ADA /* FANRoomViewController.m in Sources */,
+				92B0E53B172D5FFC00EF6ADA /* FANRoom.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

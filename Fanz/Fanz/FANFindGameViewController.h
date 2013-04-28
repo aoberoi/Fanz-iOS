@@ -25,4 +25,6 @@
 @property (strong) GnACR *gracenoteAcr;
 @property (strong) GnAudioSourceiOSMic *gracenoteAudioSource;
 
+- (IBAction)useSampleRoom:(id)sender;
+
 @end

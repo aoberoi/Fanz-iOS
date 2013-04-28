@@ -13,6 +13,9 @@
  */
 
 #import "FANFindGameViewController.h"
+#import "FANRoomChannelClient.h"
+#import "FANRoom.h"
+#import "FANRoomViewController.h"
 
 #define SAVED_USER_KEY_ACR @"savedUserACR"
 
@@ -20,6 +23,11 @@
 
 - (void)initManagerWithError:(NSError **)error;
 - (void)initAcrUserWithError:(NSError **)error;
+- (void)clientDidStartResponding:(NSNotification *)notification;
+- (void)clientDidCreateRoom:(NSNotification *)notification;
+- (void)joinRoomWithTui:(NSString *)tui tuiTag:(NSString *)tuiTag matchTime:(NSString *)matchTime;
+
+@property (weak, nonatomic) FANRoom *room;
 
 @end
 
@@ -175,8 +183,7 @@
 
 #pragma mark - Gracenote ACR Status Delegate methods
 
-// TODO: we may not need this, lets look up what these statuses actually mean
-
+// This is basically just to watch what is going on in the console
 -(void)acrStatusReady:(GnAcrStatus*)status
 {
     @autoreleasepool {
@@ -304,104 +311,110 @@
             //}
             
             // Get the title and subtitle from this GnAcrMatch
-            NSString *acrTitle = match.title.display;
-            NSString *acrSubtitle = match.subtitle.display;
+            //NSString *acrTitle = match.title.display;
+            //NSString *acrSubtitle = match.subtitle.display;
             
-            if (!acrSubtitle) {
-                acrSubtitle = @"";
-            }
+            //if (!acrSubtitle) {
+            //    acrSubtitle = @"";
+            //}
             
             // Retreive the GnTvAiring from the GnAcrMatch
-            GnTvAiring *airing = match.tvAiring;
+            //GnTvAiring *airing = match.tvAiring;
             // Retreive the GnTvChannel from the GnTvAiring
-            GnTvChannel *channel = airing.channel;
+            //GnTvChannel *channel = airing.channel;
             
             // Get the Channel callsign for display
-            NSString *channelCallsign = channel.callsign;
+            //NSString *channelCallsign = channel.callsign;
             
             // Get the position (ms from beginning of work/program) of the GnAcrMatch
-            NSString* matchPosition = match.actualPosition;
-            NSString* positionFormatted = @"";
+            //NSString* matchPosition = match.actualPosition;
+            //NSString* positionFormatted = @"";
             
-            if (matchPosition != nil) {
-                
-                int seconds = [matchPosition intValue] / 1000;
-                NSInteger remindMinute = seconds / 60;
-                NSInteger remindHours = remindMinute / 60;
-                NSInteger remindMinutes = seconds - (remindHours * 3600);
-                NSInteger remindMinuteNew = remindMinutes / 60;
-                NSInteger remindSecond = seconds - (remindMinuteNew * 60) - (remindHours * 3600);
-                positionFormatted = [NSString stringWithFormat:@"%02d:%02d:%02d",remindHours,remindMinuteNew,remindSecond];
-            }
+            //if (matchPosition != nil) {
+            //
+            //    int seconds = [matchPosition intValue] / 1000;
+            //    NSInteger remindMinute = seconds / 60;
+            //    NSInteger remindHours = remindMinute / 60;
+            //    NSInteger remindMinutes = seconds - (remindHours * 3600);
+            //    NSInteger remindMinuteNew = remindMinutes / 60;
+            //    NSInteger remindSecond = seconds - (remindMinuteNew * 60) - (remindHours * 3600);
+            //    positionFormatted = [NSString stringWithFormat:@"%02d:%02d:%02d",remindHours,remindMinuteNew,remindSecond];
+            //}
             
-            if(match.customData){
-                NSString *customDataID = match.customData.dataID;
-                NSString *resultString = [NSString stringWithFormat:@"ACR: %@ %@ (Match #%d)", customDataID, positionFormatted, count];
-                NSLog(resultString);
-                //[self updateResultMessage:resultString];
-                
-            } else {
-                NSString *resultString = [NSString stringWithFormat:@"ACR: %@ %@ %@ %@ (Match #%d)", acrTitle, acrSubtitle, channelCallsign, positionFormatted, count];
-                NSLog(resultString);
-                //[self updateResultMessage:resultString];
-            }
+            //if(match.customData){
+            //    NSString *customDataID = match.customData.dataID;
+            //    NSString *resultString = [NSString stringWithFormat:@"ACR: %@ %@ (Match #%d)", customDataID, positionFormatted, count];
+            //    NSLog(resultString);
+            //    //[self updateResultMessage:resultString];
+            //
+            //} else {
+            //    NSString *resultString = [NSString stringWithFormat:@"ACR: %@ %@ %@ %@ (Match #%d)", acrTitle, acrSubtitle, channelCallsign, positionFormatted, count];
+            //    NSLog(resultString);
+            //    //[self updateResultMessage:resultString];
+            //}
             
             // here are more examples of how to get metadata from a result
-            if (0) {
-                NSLog(@"Match Title :       %@", match.title.display);
-                NSLog(@"Match subtitle:     %@", match.subtitle.display);
-                NSLog(@"Match actual pos:   %@", match.actualPosition);
+            //if (0) {
+            //    NSLog(@"Match Title :       %@", match.title.display);
+            //    NSLog(@"Match subtitle:     %@", match.subtitle.display);
+            //    NSLog(@"Match actual pos:   %@", match.actualPosition);
                 NSLog(@"Match adjusted pos: %@", match.adjustedPosition);
                 
                 GnVideoWork *work = match.avWork;
                 if (work) {
                     NSLog(@"work tui:        %@", work.tui);
                     NSLog(@"work tag:        %@", work.tuiTag);
-                    NSLog(@"work title:      %@", work.title.display);
-                    NSLog(@"work is partial: %@", work.isPartial?@"YES":@"NO");
+                    //NSLog(@"work title:      %@", work.title.display);
+                    //NSLog(@"work is partial: %@", work.isPartial?@"YES":@"NO");
                 }
                 else
                     NSLog(@"No AV Work for this ACR match");
                 
                 GnTvAiring *airing = match.tvAiring;
+                GnTvProgram *program;
                 if (airing) {
-                    NSLog(@"airing start:   %@", airing.dateStart);
-                    NSLog(@"airing end:     %@", airing.dateEnd);
+                    //NSLog(@"airing start:   %@", airing.dateStart);
+                    //NSLog(@"airing end:     %@", airing.dateEnd);
                     
                     
-                    GnTvChannel *channel = airing.channel;
-                    if (channel) {
-                        NSLog(@"channel tui:      %@", channel.tui);
-                        NSLog(@"channel tag:      %@", channel.tuiTag);
-                        NSLog(@"channel name:     %@", channel.name);
-                        NSLog(@"channel callsign: %@", channel.callsign);
-                        NSLog(@"channel number:   %@", channel.number);
-                    }
-                    GnTvProgram *program = airing.tvProgram;
+                    //GnTvChannel *channel = airing.channel;
+                    //if (channel) {
+                    //    NSLog(@"channel tui:      %@", channel.tui);
+                    //    NSLog(@"channel tag:      %@", channel.tuiTag);
+                    //    NSLog(@"channel name:     %@", channel.name);
+                    //    NSLog(@"channel callsign: %@", channel.callsign);
+                    //    NSLog(@"channel number:   %@", channel.number);
+                    //}
+                    program = airing.tvProgram;
                     if (program) {
                         NSLog(@"program tui:      %@", program.tui);
                         NSLog(@"program tag:      %@", program.tuiTag);
-                        NSLog(@"program title:    %@", program.title.display);
-                        NSLog(@"program subtitle: %@", program.subtitle.display);
-                        GnVideoWork *programWork = program.avWork;
-                        if (programWork) {
-                            NSLog(@"program work tui:      %@", programWork.tui);
-                            NSLog(@"program work tag:      %@", programWork.tuiTag);
-                            NSLog(@"program work title:    %@", programWork.title.display);
-                        }
+                        //NSLog(@"program title:    %@", program.title.display);
+                        //NSLog(@"program subtitle: %@", program.subtitle.display);
+                        //GnVideoWork *programWork = program.avWork;
+                        //if (programWork) {
+                        //    NSLog(@"program work tui:      %@", programWork.tui);
+                        //    NSLog(@"program work tag:      %@", programWork.tuiTag);
+                        //    NSLog(@"program work title:    %@", programWork.title.display);
+                        //}
                     }
                 }
-            }
+            //}
             
+            // Assumes the first match is right
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self joinRoomWithTui:program.tui tuiTag:program.tuiTag matchTime:match.adjustedPosition];
+            });
+            
+            [self stopACR];
+            [[AVAudioSession sharedInstance] setDelegate:nil];
             
         }
         if (count == 0) {
             NSLog([NSString stringWithFormat:@"ACR: No match (%@)", [self currentTime]]);
             //[self updateResultMessage:[NSString stringWithFormat:@"ACR: No match (%@)", [self currentTime]]];
         }
-        
-        
-        
+
     }
 
 }
@@ -477,6 +490,7 @@
     if (error) {
         
         NSLog(@"Failed to stop Gracenote Audio Source");
+        return;
         
     } else {
         
@@ -492,6 +506,21 @@
     }
 }
 
+#pragma mark - Room Client
+
+- (void)clientDidStartResponding:(NSNotification *)notification
+{
+    
+}
+
+- (void)clientDidCreateRoom:(NSNotification *)notification
+{
+    self.room = notification.userInfo[@"room"];
+    
+    [self performSegueWithIdentifier:@"enterRoom" sender:self];
+    
+}
+
 #pragma mark - Helpers
 
 -(NSString*) currentTime{
@@ -504,4 +533,30 @@
     return theTime;
 }
 
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"enterRoom"]) {
+        FANRoomViewController *roomViewController = (FANRoomViewController *)segue.destinationViewController;
+        roomViewController.room = self.room;
+        self.room = nil;
+    }
+}
+
+- (void)joinRoomWithTui:(NSString *)tui tuiTag:(NSString *)tuiTag matchTime:(NSString *)matchTime
+{
+    FANRoomChannelClient *client = [[FANRoomChannelClient alloc] initWithTui:tui
+                                                                      tuiTag:tuiTag
+                                                                   matchTime:matchTime];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clientDidStartResponding:) name:kFANRoomChannelClientDidRecieveResponseNotification object:client];
+
+}
+
+- (IBAction)useSampleRoom:(id)sender {
+    [self joinRoomWithTui:@"298651741" tuiTag:@"004158879932D810A35C0F2A7294D926" matchTime:@"234234"];
+    [self stopACR];
+    [[AVAudioSession sharedInstance] setDelegate:nil];
+}
 @end

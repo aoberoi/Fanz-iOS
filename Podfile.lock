@@ -12,11 +12,15 @@ PODS:
 - ASIHTTPRequest/S3 (1.8.1):
   - Reachability
 - Facebook-iOS-SDK (3.5.1)
+- JSONKit (1.5pre)
+- NSString+RMURLEncoding (0.1.0)
 - Reachability (3.1.0)
 
 DEPENDENCIES:
 - ASIHTTPRequest (~> 1.8.1)
 - Facebook-iOS-SDK (~> 3.5.1)
+- JSONKit (~> 1.5pre)
+- NSString+RMURLEncoding (~> 0.1.0)
 
 SPEC CHECKSUMS:
   ASIHTTPRequest: a79e32b54f92471bff8979f3b82182f0e9b6992c
@@ -24,6 +28,8 @@ SPEC CHECKSUMS:
   ASIHTTPRequest/CloudFiles: a79e32b54f92471bff8979f3b82182f0e9b6992c
   ASIHTTPRequest/S3: a79e32b54f92471bff8979f3b82182f0e9b6992c
   Facebook-iOS-SDK: 0dbd897e842cefeb012ec2eb8eba659ba6b96b12
+  JSONKit: 409734ab3407fce90ef7eaa95d7168f38d9a6601
+  NSString+RMURLEncoding: f2a8c822486cdbe5c46638e85bc159aaa3ebc2b8
   Reachability: ba94ecd4eaa037be3d0588b38956672588530c5b
 
 COCOAPODS: 0.16.1
