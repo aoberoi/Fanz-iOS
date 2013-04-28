@@ -24,9 +24,10 @@
 		92B0E515172C93DB00EF6ADA /* GracenoteACR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92B0E514172C93DB00EF6ADA /* GracenoteACR.framework */; };
 		92B0E518172C94C200EF6ADA /* FANFindGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B0E517172C94C200EF6ADA /* FANFindGameViewController.m */; };
 		92B0E51D172CBA1800EF6ADA /* FANIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B0E51C172CBA1800EF6ADA /* FANIntroViewController.m */; };
-		92B0E51F172CBD1300EF6ADA /* intro_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0E51E172CBD1300EF6ADA /* intro_background.png */; };
-		92B0E521172CC0C600EF6ADA /* intro_title.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0E520172CC0C600EF6ADA /* intro_title.png */; };
-		92B0E523172CC25800EF6ADA /* facebook_login_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0E522172CC25800EF6ADA /* facebook_login_btn.png */; };
+		92B0E527172CC3A400EF6ADA /* facebook_login_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0E524172CC3A400EF6ADA /* facebook_login_btn@2x.png */; };
+		92B0E528172CC3A400EF6ADA /* intro_title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0E525172CC3A400EF6ADA /* intro_title@2x.png */; };
+		92B0E529172CC3A400EF6ADA /* intro_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92B0E526172CC3A400EF6ADA /* intro_background@2x.png */; };
+		92B0E52B172CC4D400EF6ADA /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92B0E52A172CC4D400EF6ADA /* Accounts.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,9 +56,10 @@
 		92B0E51A172C9C6800EF6ADA /* CustomerCredentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomerCredentials.h; sourceTree = "<group>"; };
 		92B0E51B172CBA1800EF6ADA /* FANIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FANIntroViewController.h; sourceTree = "<group>"; };
 		92B0E51C172CBA1800EF6ADA /* FANIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FANIntroViewController.m; sourceTree = "<group>"; };
-		92B0E51E172CBD1300EF6ADA /* intro_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_background.png; sourceTree = "<group>"; };
-		92B0E520172CC0C600EF6ADA /* intro_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_title.png; sourceTree = "<group>"; };
-		92B0E522172CC25800EF6ADA /* facebook_login_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_login_btn.png; sourceTree = "<group>"; };
+		92B0E524172CC3A400EF6ADA /* facebook_login_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_login_btn@2x.png"; sourceTree = "<group>"; };
+		92B0E525172CC3A400EF6ADA /* intro_title@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intro_title@2x.png"; sourceTree = "<group>"; };
+		92B0E526172CC3A400EF6ADA /* intro_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "intro_background@2x.png"; sourceTree = "<group>"; };
+		92B0E52A172CC4D400EF6ADA /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		B8F27C58091340B2A3548A54 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -66,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92B0E52B172CC4D400EF6ADA /* Accounts.framework in Frameworks */,
 				92B0E513172C939700EF6ADA /* Security.framework in Frameworks */,
 				92B0E511172C938D00EF6ADA /* AudioToolbox.framework in Frameworks */,
 				92B0E50F172C937C00EF6ADA /* AVFoundation.framework in Frameworks */,
@@ -101,6 +104,7 @@
 		92B0E4EA172C8DE200EF6ADA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				92B0E52A172CC4D400EF6ADA /* Accounts.framework */,
 				92B0E514172C93DB00EF6ADA /* GracenoteACR.framework */,
 				92B0E512172C939700EF6ADA /* Security.framework */,
 				92B0E510172C938D00EF6ADA /* AudioToolbox.framework */,
@@ -133,9 +137,9 @@
 		92B0E4F2172C8DE200EF6ADA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				92B0E522172CC25800EF6ADA /* facebook_login_btn.png */,
-				92B0E520172CC0C600EF6ADA /* intro_title.png */,
-				92B0E51E172CBD1300EF6ADA /* intro_background.png */,
+				92B0E524172CC3A400EF6ADA /* facebook_login_btn@2x.png */,
+				92B0E525172CC3A400EF6ADA /* intro_title@2x.png */,
+				92B0E526172CC3A400EF6ADA /* intro_background@2x.png */,
 				92B0E4F3172C8DE200EF6ADA /* Fanz-Info.plist */,
 				92B0E4F4172C8DE200EF6ADA /* InfoPlist.strings */,
 				92B0E4F7172C8DE200EF6ADA /* main.m */,
@@ -205,9 +209,9 @@
 				92B0E500172C8DE200EF6ADA /* Default@2x.png in Resources */,
 				92B0E502172C8DE200EF6ADA /* Default-568h@2x.png in Resources */,
 				92B0E505172C8DE200EF6ADA /* MainStoryboard.storyboard in Resources */,
-				92B0E51F172CBD1300EF6ADA /* intro_background.png in Resources */,
-				92B0E521172CC0C600EF6ADA /* intro_title.png in Resources */,
-				92B0E523172CC25800EF6ADA /* facebook_login_btn.png in Resources */,
+				92B0E527172CC3A400EF6ADA /* facebook_login_btn@2x.png in Resources */,
+				92B0E528172CC3A400EF6ADA /* intro_title@2x.png in Resources */,
+				92B0E529172CC3A400EF6ADA /* intro_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
