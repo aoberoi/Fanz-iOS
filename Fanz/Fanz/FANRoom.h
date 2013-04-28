@@ -12,4 +12,10 @@
 
 - (id)initWithJson:(NSDictionary *)json;
 
+@property NSDictionary *homeTeam;
+@property NSDictionary *awayTeam;
+@property NSArray *members;
+@property NSString *sessionId;
+@property NSString *title;
+
 @end

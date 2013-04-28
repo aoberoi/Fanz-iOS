@@ -16,6 +16,7 @@
 #import "FANRoomChannelClient.h"
 #import "FANRoom.h"
 #import "FANRoomViewController.h"
+#import "FANAppDelegate.h"
 
 #define SAVED_USER_KEY_ACR @"savedUserACR"
 
@@ -27,7 +28,7 @@
 - (void)clientDidCreateRoom:(NSNotification *)notification;
 - (void)joinRoomWithTui:(NSString *)tui tuiTag:(NSString *)tuiTag matchTime:(NSString *)matchTime;
 
-@property (weak, nonatomic) FANRoom *room;
+@property (strong, nonatomic) FANRoom *room;
 
 @end
 
@@ -413,6 +414,9 @@
         if (count == 0) {
             NSLog([NSString stringWithFormat:@"ACR: No match (%@)", [self currentTime]]);
             //[self updateResultMessage:[NSString stringWithFormat:@"ACR: No match (%@)", [self currentTime]]];
+            
+            // HACK!!!!
+            [self useSampleRoom:self];
         }
 
     }
@@ -546,17 +550,38 @@
 
 - (void)joinRoomWithTui:(NSString *)tui tuiTag:(NSString *)tuiTag matchTime:(NSString *)matchTime
 {
-    FANRoomChannelClient *client = [[FANRoomChannelClient alloc] initWithTui:tui
+    FANAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    
+    appDelegate.roomClient = [[FANRoomChannelClient alloc] initWithTui:tui
                                                                       tuiTag:tuiTag
                                                                    matchTime:matchTime];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clientDidStartResponding:) name:kFANRoomChannelClientDidRecieveResponseNotification object:client];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clientDidStartResponding:) name:kFANRoomChannelClientDidRecieveResponseNotification object:appDelegate.roomClient];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clientDidCreateRoom:) name:kFANRoomChannelClientDidCreateRoomNotification object:appDelegate.roomClient];
 
 }
 
 - (IBAction)useSampleRoom:(id)sender {
-    [self joinRoomWithTui:@"298651741" tuiTag:@"004158879932D810A35C0F2A7294D926" matchTime:@"234234"];
+    
+    // Assumes the first match is right
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self joinRoomWithTui:@"338310979" tuiTag:@"C8A560CCB529A571A1728BFB6D95F1E5" matchTime:@"3529673"];
+    });
     [self stopACR];
     [[AVAudioSession sharedInstance] setDelegate:nil];
 }
+
+- (IBAction)forceTransition:(id)sender {
+    self.room = [[FANRoom alloc] initWithJson:@{}];
+    [self performSegueWithIdentifier:@"enterRoom" sender:self];
+}
+
+- (IBAction)doManualLookup:(id)sender {
+    NSError *error = [self.gracenoteAcr doManualLookup];
+    if (error) {
+        //[self updateStatusMessage:[error localizedDescription]];
+        NSLog(@"%@", error.description);
+    }
+}
+
 @end

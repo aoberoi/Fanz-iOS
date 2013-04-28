@@ -19,6 +19,8 @@ extern NSString *const kFANRoomChannelClientDidCreateRoomNotification;
 - (void)request:(ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders;
 - (void)request:(ASIHTTPRequest *)request didReceiveData:(NSData *)data;
 
+@property (strong, nonatomic) NSMutableData *bufferData;
+
 @property (strong, nonatomic) ASIHTTPRequest *request;
 
 @property (strong, nonatomic) NSString *tui;

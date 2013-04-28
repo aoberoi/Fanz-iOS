@@ -62,11 +62,13 @@ NSString *const kFANRoomChannelClientDidCreateRoomNotification = @"RoomChannelCl
 
 - (void)makeRequest
 {
-    NSString *requestURL = [NSString stringWithFormat:@"http://http://ec2-54-244-209-3.us-west-2.compute.amazonaws.com:5000/join/%@-%@?%@", self.tui, self.tuiTag, [self encodeQueryParams:@{@"username": self.username, @"match_time": self.matchTime}]];
+    NSString *requestURL = [NSString stringWithFormat:@"http://ec2-54-244-209-3.us-west-2.compute.amazonaws.com:5000/join/%@-%@?%@", self.tui, self.tuiTag, [self encodeQueryParams:@{@"username": self.username, @"match_time": self.matchTime}]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:requestURL]];
     request.shouldAttemptPersistentConnection = YES;
     request.delegate = self;
-    [request startAsynchronous];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [request startAsynchronous];
+    });
     NSLog(@"started request with URL: %@", requestURL);
 }
 
@@ -87,6 +89,7 @@ NSString *const kFANRoomChannelClientDidCreateRoomNotification = @"RoomChannelCl
 
 - (void)request:(ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders;
 {
+    NSLog(@"got headers");
     [[NSNotificationCenter defaultCenter] postNotificationName:kFANRoomChannelClientDidRecieveResponseNotification
                                                         object:self
                                                       userInfo:@{ @"responseHeaders" : responseHeaders }];
@@ -98,7 +101,24 @@ NSString *const kFANRoomChannelClientDidCreateRoomNotification = @"RoomChannelCl
     NSLog(@"Did recieve bytes:");
     // trying to encode the bytes as a string
     
-    NSDictionary *json = (NSDictionary *)[[JSONDecoder decoder] objectWithData:data];
+    NSLog(@"%@", [NSString stringWithUTF8String:[data bytes]]);
+    
+    if (!self.bufferData) {
+        self.bufferData = [[NSMutableData alloc] init];
+    }
+    [self.bufferData appendBytes:[data bytes] length:[data length]];
+    
+    NSLog(@"trying to consume: \n%@", [NSString stringWithUTF8String:[self.bufferData bytes]]);
+    
+    NSDictionary *json = (NSDictionary *)[[JSONDecoder decoder] objectWithData:self.bufferData];
+    
+    if (json) {
+        self.bufferData = nil;
+    } else {
+        return;
+    }
+    
+    NSLog(@"complete json found");
     
     if (self.didRecieveRoomData) {
         [self parseJson:json];
@@ -120,9 +140,22 @@ NSString *const kFANRoomChannelClientDidCreateRoomNotification = @"RoomChannelCl
     
 }
 
+//- (void)requestStarted:(ASIHTTPRequest *)request;
+//- (void)request:(ASIHTTPRequest *)request willRedirectToURL:(NSURL *)newURL;
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"request finished");
+}
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSLog(@"request failed");
+}
+//- (void)requestRedirected:(ASIHTTPRequest *)request;
+
 - (void)parseJson:(NSDictionary *)json
 {
     NSLog(@"recieved json: %@", [json description]);
 }
+
 
 @end

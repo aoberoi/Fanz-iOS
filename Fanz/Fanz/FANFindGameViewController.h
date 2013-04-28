@@ -26,5 +26,7 @@
 @property (strong) GnAudioSourceiOSMic *gracenoteAudioSource;
 
 - (IBAction)useSampleRoom:(id)sender;
+- (IBAction)forceTransition:(id)sender;
+- (IBAction)doManualLookup:(id)sender;
 
 @end
