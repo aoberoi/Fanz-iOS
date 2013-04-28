@@ -175,7 +175,7 @@
 
 #pragma mark - Gracenote ACR Status Delegate methods
 
-// TODO: we may not need this
+// TODO: we may not need this, lets look up what these statuses actually mean
 
 -(void)acrStatusReady:(GnAcrStatus*)status
 {
