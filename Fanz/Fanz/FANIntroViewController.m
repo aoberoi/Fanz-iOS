@@ -37,20 +37,6 @@
     self.backgroundImageView.image = [[UIImage imageNamed:@"intro_background"] resizableImageWithCapInsets:UIEdgeInsetsMake(24.0, 24.0, 24.0, 24.0)
                                                                                               resizingMode:UIImageResizingModeStretch];
     
-    if (![FBSession activeSession].isOpen) {
-    
-        if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
-            [FBSession openActiveSessionWithReadPermissions:@[@"email"]
-                                               allowLoginUI:NO
-                                          completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-                [self handleOpenSessionCompletionWithSession:session state:status error:error];
-            }];
-        }
-    } else {
-        [self handleOpenSessionCompletionWithSession:[FBSession activeSession] state:[FBSession activeSession].state error:nil];
-    }
-    
-    
 }
 
 - (void)didReceiveMemoryWarning

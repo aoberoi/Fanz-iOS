@@ -7,12 +7,33 @@
 //
 
 #import "FANAppDelegate.h"
+#import "FANFindGameViewController.h"
+
+@interface FANAppDelegate ()
+
+- (void)skipIntroViewController;
+
+@end
 
 @implementation FANAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    if (![FBSession activeSession].isOpen) {
+        
+        if ([FBSession activeSession].state == FBSessionStateCreatedTokenLoaded) {
+            [FBSession openActiveSessionWithReadPermissions:@[@"email"]
+                                               allowLoginUI:NO
+                                          completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                              [self skipIntroViewController];
+                                          }];
+        }
+    } else {
+        [self skipIntroViewController];
+    }
+    
     return YES;
 }
 							
@@ -53,6 +74,12 @@
     return [FBAppCall handleOpenURL:url
                   sourceApplication:sourceApplication
                         withSession:self.facebookSession];
+}
+
+- (void)skipIntroViewController
+{
+    FANFindGameViewController *findGameViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"findGame"];
+    self.window.rootViewController = findGameViewController;
 }
 
 @end
