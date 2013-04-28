@@ -12,4 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
+- (IBAction)loginPressed:(id)sender;
+
 @end

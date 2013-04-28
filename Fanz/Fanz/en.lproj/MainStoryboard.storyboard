@@ -32,6 +32,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginPressed:" destination="2" eventType="touchUpInside" id="8pG-u3-avM"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -63,6 +66,7 @@
         <class className="FANIntroViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FANIntroViewController.h"/>
             <relationships>
+                <relationship kind="action" name="loginPressed:"/>
                 <relationship kind="outlet" name="backgroundImageView" candidateClass="UIImageView"/>
             </relationships>
         </class>
